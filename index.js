@@ -4,6 +4,7 @@ const express = require("express");
 const db = require("./data/db.js");
 
 const server = express();
+const cors = require("cors");
 
 server.listen(5000, () => {
   console.log("*** listening on port 5000");
@@ -11,10 +12,12 @@ server.listen(5000, () => {
 
 //============Global Middleware Section=================
 server.use(express.json());
+server.use(cors());
 //============End of Global Middleware Section=================
 
 server.post("/api/users", (req, res) => {
   const userInfo = req.body;
+  console.log("body req", userInfo);
   db.insert(userInfo)
     .then(user => {
       if (!user.name || !user.bio) {
